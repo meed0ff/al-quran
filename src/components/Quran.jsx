@@ -21,7 +21,7 @@ const Quran = () => {
 
   return (
     <div>
-      <div className="p-4 grid grid-cols-4 gap-2">
+      <div className="p-4 grid grid-cols-4 gap-2 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
         {data.data.data.map((res, i) => {
           return (
             <Link to={`sura/${res.number}`} key={i} className={`text-xl ${buttonVariants({variant:""})}`}>
@@ -32,7 +32,6 @@ const Quran = () => {
       </div>
     </div>
   );
-  // return <>{console.log(data.data.data)}</>
 };
 
 export default Quran;

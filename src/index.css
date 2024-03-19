@@ -6,12 +6,16 @@
   font-family: K2D !important;
 }
 
-.button-hover-shadow{
+body {
+  background: url("https://img.freepik.com/premium-vector/arabic-pattern-background-islamic-ornament-vector-geometric-3d-shape-texture-arabian-traditional-motif_611910-3984.jpg");
+}
+
+.button-hover-shadow {
   box-shadow: 0px 0px 0px 0px #32a852;
   transition: all 0.3s;
 }
 
-.button-hover-shadow:hover{
+.button-hover-shadow:hover {
   box-shadow: 2.5px 2.5px 0 0 #32a852;
 }
 
