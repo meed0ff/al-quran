@@ -3,13 +3,7 @@ import React from "react";
 import { useQuery } from "react-query";
 
 const NamazTime = () => {
-  const { data, isLoading } = useQuery(
-    "namaz-times",
-    () => {
-      return axios("https://islomapi.uz/api/present/day?region=Toshkent");
-    },
-    { refetchIntervalInBackground: 1800 }
-  );
+  const { data, isLoading } = useQuery("namaz-times",() => { return axios("https://islomapi.uz/api/present/day?region=Toshkent"); }, { refetchIntervalInBackground: 1800 });
 
   if (isLoading)
     return (
