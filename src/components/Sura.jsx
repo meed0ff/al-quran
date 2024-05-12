@@ -7,10 +7,16 @@ import { FaLanguage, IonCaretBack, LineMdPlayTwotone } from "./Icons";
 import { SuraName, SuraContext, AyatContext } from "./Ayats";
 
 const Sura = () => {
+  if (localStorage.getItem("lang") == null) {
+    localStorage.setItem("lang", 0);
+  }
   const props = useParams();
   const langs = ["uz.sodik", "ru.kuliev"];
   const [langNum, setLangNum] = useState(0);
-  const lang = langs[localStorage.getItem("lang")];
+  const lang =
+    langs[
+      localStorage.getItem("lang") == null ? 0 : localStorage.getItem("lang")
+    ];
 
   const nav = useNavigate();
 
