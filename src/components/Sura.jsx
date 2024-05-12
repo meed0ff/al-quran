@@ -105,7 +105,7 @@ const Sura = () => {
         </Button>
         <Button className={`flex gap-2`} onClick={changeLang}>
           <FaLanguage />
-          <p>{lang.split(".")[0].toUpperCase()}</p>
+          <p>{lang?.split(".")[0].toUpperCase()}</p>
         </Button>
       </div>
 
