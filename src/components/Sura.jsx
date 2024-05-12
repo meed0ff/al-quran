@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "./ui/button";
 import { FaLanguage, IonCaretBack, LineMdPlayTwotone } from "./Icons";
-import { SuraContext, AyatContext } from "./Ayats";
+import { SuraName, SuraContext, AyatContext } from "./Ayats";
 
 const Sura = () => {
   const props = useParams();
@@ -16,7 +16,8 @@ const Sura = () => {
 
   const [ayats, setAyats] = useState([]);
   const suraCtx = useContext(SuraContext);
-  const { ayat, setAyat } = useContext(AyatContext);
+  const { setSuraName } = useContext(SuraName);
+  const { setAyat } = useContext(AyatContext);
 
   const {
     data: sura,
@@ -126,14 +127,17 @@ const Sura = () => {
                 {trans.data.data.ayahs[i].text}
               </h1>
               <h1 className="text-4xl text-center m-2">{res.text}</h1>
-              {/* {console.log(suraAudio.data.data.ayahs[i].number)} */}
               <Button
                 variant="secondary"
                 onClick={() => {
+                  setSuraName(
+                    `${sura.data.data.englishName} - ${sura.data.data.name}`
+                  );
                   suraCtx.setSura(ayats);
+                  setAyat(null);
                   setAyat(i);
                 }}
-                className={"px-2 mt-2"}
+                className={"px-2 mt-2 text-primary"}
               >
                 <LineMdPlayTwotone />
               </Button>

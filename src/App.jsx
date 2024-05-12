@@ -12,12 +12,14 @@ import NamazTime from "./components/NamazTime";
 const Sura = React.lazy(() => import("./components/Sura"));
 
 import AudioPlayer from "react-h5-audio-player";
-import { SuraContext, AyatContext } from "./components/Ayats";
+import { SuraName, SuraContext, AyatContext } from "./components/Ayats";
+import { LineMdCloseCircleTwotone } from "./components/Icons";
 // import "react-h5-audio-player/lib/styles.less";
 
 function App() {
-  const { sura } = useContext(SuraContext);
+  const { sura, setSura } = useContext(SuraContext);
   const { ayat, setAyat } = useContext(AyatContext);
+  const { suraName } = useContext(SuraName);
 
   return (
     <div className="pt-10 pb-6">
@@ -43,15 +45,38 @@ function App() {
       ></div>
       <Footer />
       <div
-        className={`fixed bottom-8 left-2 right-2 backdrop-blur rounded-xl border-2 overflow-hidden transition-all ${
+        className={`fixed flex flex-col bottom-8 left-2 right-2 bg-green-900/50 backdrop-blur rounded-xl border-2 overflow-hidden transition-all ${
           sura.length == 0 || ayat == sura.length
             ? "opacity-0 translate-y-5 blur-3xl pointer-events-none"
             : ""
         }`}
       >
+        <div className="flex justify-between p-1">
+          <div className="flex flex-col text-green-400">
+            <h1>{suraName}</h1>
+            <h2>Ayah {ayat + 1}</h2>
+          </div>
+          <button
+            className="text-green-400"
+            onClick={() => {
+              setSura([]);
+            }}
+          >
+            {sura.length == 0 || ayat == sura.length ? null : (
+              <LineMdCloseCircleTwotone />
+            )}
+          </button>
+        </div>
         <AudioPlayer
           src={`https://cdn.islamic.network/quran/audio/128/ar.alafasy/${sura[ayat]}.mp3`}
-          className="bg-green-900/50"
+          className="bg-transparent shadow-none"
+          showSkipControls
+          onClickPrevious={() => {
+            if (ayat > 0) setAyat(ayat - 1);
+          }}
+          onClickNext={() => {
+            setAyat(ayat + 1);
+          }}
           onEnded={() => {
             setAyat(ayat + 1);
           }}
