@@ -32,7 +32,7 @@ const NamazTime = () => {
   };
 
   return (
-    <div className="w-full grid grid-cols-6 px-4 gap-4 items-center justify-center translate-y-[35vh] max-sm:gap-1">
+    <div className="fixed top-1/2 left-1/2 w-full grid grid-cols-2 -translate-x-1/2 -translate-y-1/2 px-4 gap-4 items-center justify-center max-w-[500px] max-sm:gap-1">
       <div
         className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
           compareTime(data.data.times.tong_saharlik, data.data.times.quyosh)

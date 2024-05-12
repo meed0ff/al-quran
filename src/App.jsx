@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 import "./App.css";
 import "./App.less";
 import HomePage from "./components/HomePage";
@@ -20,6 +20,7 @@ function App() {
   const { sura, setSura } = useContext(SuraContext);
   const { ayat, setAyat } = useContext(AyatContext);
   const { suraName } = useContext(SuraName);
+  const loc = useLocation();
 
   return (
     <div className="pt-10 pb-6">
@@ -40,12 +41,17 @@ function App() {
       </Routes>
       <div
         className={`${
-          sura.length == 0 || ayat == sura.length ? "hidden" : ""
-        } mt-24`}
+          sura.length == 0 ||
+          ayat == sura.length ||
+          loc.pathname == "/" ||
+          loc.pathname == "/namaz-times"
+            ? "hidden"
+            : ""
+        } mt-12 max-lg:mt-[150px]`}
       ></div>
       <Footer />
       <div
-        className={`fixed flex flex-col bottom-8 left-2 right-2 bg-green-900/50 backdrop-blur rounded-xl border-2 overflow-hidden transition-all ${
+        className={`fixed flex flex-col bottom-9 right-0 mr-1 w-[40%] max-lg:w-1/2 max-md:w-auto max-md:m-0 max-md:right-1 max-md:left-1 max-md:bottom-8 bg-green-900/50 backdrop-blur rounded-xl border-2 overflow-hidden transition-all ${
           sura.length == 0 || ayat == sura.length
             ? "opacity-0 translate-y-5 blur-3xl pointer-events-none"
             : ""
