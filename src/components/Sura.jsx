@@ -1,16 +1,22 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "./ui/button";
+import { FaLanguage, IonCaretBack, LineMdPlayTwotone } from "./Icons";
+import { SuraContext, AyatContext } from "./Ayats";
 
 const Sura = () => {
   const props = useParams();
   const langs = ["uz.sodik", "ru.kuliev"];
   const [langNum, setLangNum] = useState(0);
-  const lang = langs[langNum];
+  const lang = langs[localStorage.getItem("lang")];
 
   const nav = useNavigate();
+
+  const [ayats, setAyats] = useState([]);
+  const suraCtx = useContext(SuraContext);
+  const { ayat, setAyat } = useContext(AyatContext);
 
   const {
     data: sura,
@@ -50,9 +56,18 @@ const Sura = () => {
   } = useQuery(
     "sura-audio",
     () => {
-      return axios(
+      const fetch = axios(
         `https://api.alquran.cloud/v1/surah/${props.number}/ar.alafasy`
       );
+      fetch.then((res) => {
+        const tempayats = [];
+        res.data.data.ayahs.map((ayat) => {
+          // console.log(ayat.number);
+          tempayats.push(ayat.number);
+        });
+        setAyats(tempayats);
+      });
+      return fetch;
     },
     {
       refetchOnWindowFocus: false,
@@ -60,9 +75,10 @@ const Sura = () => {
   );
 
   const changeLang = function () {
-    refetch();
     let langNumber = langNum + 1;
     setLangNum(langNumber >= langs.length ? 0 : langNumber);
+    setTimeout(refetch, 10);
+    localStorage.setItem("lang", langNum);
   };
 
   if (
@@ -83,11 +99,11 @@ const Sura = () => {
   return (
     <div>
       <div className="flex justify-between p-4">
-        <Button onClick={() => nav(-1)}>
-          <i className="fa-solid fa-arrow-left fa-2xl"></i>
+        <Button onClick={() => nav(-1)} className={"px-2"}>
+          <IonCaretBack />
         </Button>
         <Button className={`flex gap-2`} onClick={changeLang}>
-          <i className="fa-solid fa-language fa-2xl"></i>
+          <FaLanguage />
           <p>{lang.split(".")[0].toUpperCase()}</p>
         </Button>
       </div>
@@ -110,11 +126,17 @@ const Sura = () => {
                 {trans.data.data.ayahs[i].text}
               </h1>
               <h1 className="text-4xl text-center m-2">{res.text}</h1>
-              <audio
-                src={`${suraAudio.data.data.ayahs[0].audio}`}
-                controls
-                className="rounded mt-2 w-[195px] translate-y-4 -translate-x-[2px]"
-              ></audio>
+              {/* {console.log(suraAudio.data.data.ayahs[i].number)} */}
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  suraCtx.setSura(ayats);
+                  setAyat(i);
+                }}
+                className={"px-2 mt-2"}
+              >
+                <LineMdPlayTwotone />
+              </Button>
               <img
                 src="https://www.quronim.uz/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbg2.a8b3a2d7.png&w=640&q=75"
                 alt=""

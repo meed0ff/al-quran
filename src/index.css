@@ -12,7 +12,6 @@ body {
 
 .button-hover-shadow {
   box-shadow: 0px 0px 0px 0px #32a852;
-  transition: all 0.3s;
 }
 
 .button-hover-shadow:hover {

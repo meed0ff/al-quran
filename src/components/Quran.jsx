@@ -3,8 +3,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 
-import { buttonVariants } from "@/components/ui/button"
-
+import { buttonVariants } from "@/components/ui/button";
 
 const Quran = () => {
   const { data, isLoading, isFetching } = useQuery("suras", () => {
@@ -21,11 +20,20 @@ const Quran = () => {
 
   return (
     <div>
-      <div className="p-4 grid grid-cols-4 gap-2 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
+      <div className="p-4 grid grid-cols-10 gap-2 max-lg:grid-cols-6 max-md:grid-cols-3 max-md:p-2 max-[420px]:grid-cols-2">
         {data.data.data.map((res, i) => {
           return (
-            <Link to={`sura/${res.number}`} key={i} className={`text-xl ${buttonVariants({variant:""})}`}>
-              {res.number} {res.englishName}
+            <Link
+              to={`sura/${res.number}`}
+              key={i}
+              className={`flex flex-col justify-center items-center gap-2 h-auto ${buttonVariants(
+                { variant: "" }
+              )}`}
+            >
+              <h1 className="text-2xl bg-black/30 h-12 w-12 rounded-full flex justify-center items-center">
+                {res.number}
+              </h1>{" "}
+              <h3>{res.englishName}</h3>
             </Link>
           );
         })}

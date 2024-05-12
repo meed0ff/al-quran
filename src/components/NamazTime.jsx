@@ -3,7 +3,13 @@ import React from "react";
 import { useQuery } from "react-query";
 
 const NamazTime = () => {
-  const { data, isLoading } = useQuery("namaz-times",() => { return axios("https://islomapi.uz/api/present/day?region=Toshkent"); }, { refetchIntervalInBackground: 1800 });
+  const { data, isLoading } = useQuery(
+    "namaz-times",
+    () => {
+      return axios("https://islomapi.uz/api/present/day?region=Toshkent");
+    },
+    { refetchIntervalInBackground: 1800 }
+  );
 
   if (isLoading)
     return (
@@ -26,12 +32,12 @@ const NamazTime = () => {
   };
 
   return (
-    <div className="flex flex-wrap gap-2 items-center justify-center translate-y-[35vh] max-sm:gap-1">
+    <div className="w-full grid grid-cols-6 px-4 gap-4 items-center justify-center translate-y-[35vh] max-sm:gap-1">
       <div
         className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
           compareTime(data.data.times.tong_saharlik, data.data.times.quyosh)
-            ? "bg-primary text-gray-900"
-            : ""
+            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
+            : "bg-accent border border-primary"
         }`}
       >
         <h1>Tong</h1> <p>{data.data.times.tong_saharlik}</p>
@@ -39,8 +45,8 @@ const NamazTime = () => {
       <div
         className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
           compareTime(data.data.times.quyosh, data.data.times.peshin)
-            ? "bg-primary text-gray-900"
-            : ""
+            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
+            : "bg-accent border border-primary"
         }`}
       >
         <h1>Quyosh</h1> <p>{data.data.times.quyosh}</p>
@@ -48,8 +54,8 @@ const NamazTime = () => {
       <div
         className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
           compareTime(data.data.times.peshin, data.data.times.asr)
-            ? "bg-primary text-gray-900"
-            : ""
+            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
+            : "bg-accent border border-primary"
         }`}
       >
         <h1>Peshin</h1> <p>{data.data.times.peshin}</p>
@@ -57,8 +63,8 @@ const NamazTime = () => {
       <div
         className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
           compareTime(data.data.times.asr, data.data.times.shom_iftor)
-            ? "bg-primary text-gray-900"
-            : ""
+            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
+            : "bg-accent border border-primary"
         }`}
       >
         <h1>Asr</h1> <p>{data.data.times.asr}</p>
@@ -66,15 +72,17 @@ const NamazTime = () => {
       <div
         className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
           compareTime(data.data.times.shom_iftor, data.data.times.hufton)
-            ? "bg-primary text-gray-900"
-            : ""
+            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
+            : "bg-accent border border-primary"
         }`}
       >
         <h1>Shom</h1> <p>{data.data.times.shom_iftor}</p>
       </div>
       <div
         className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
-          compareTime(data.data.times.hufton) ? "bg-primary text-gray-900" : ""
+          compareTime(data.data.times.hufton)
+            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
+            : "bg-accent border border-primary"
         }`}
       >
         <h1>Hufton</h1> <p>{data.data.times.hufton}</p>
