@@ -1,10 +1,14 @@
 import axios from "axios";
 import React from "react";
 import { useQuery } from "react-query";
+import { Loading } from "./Icons";
+import { Link, useLocation } from "react-router-dom";
 
 const NamazTime = () => {
+  const loc = useLocation();
+
   const { data, isLoading } = useQuery(
-    "namaz-times",
+    "vaqtlar",
     () => {
       return axios("https://islomapi.uz/api/present/day?region=Toshkent");
     },
@@ -14,8 +18,7 @@ const NamazTime = () => {
   if (isLoading)
     return (
       <div className="h-[90vh] w-full flex flex-col justify-center items-center gap-4 text-green-600 font-bold text-2xl">
-        <i className="fa-solid fa-spinner fa-spin-pulse fa-2xl"></i>
-        <h1 className="">Loading...</h1>
+        <Loading />
       </div>
     );
 
@@ -31,62 +34,67 @@ const NamazTime = () => {
     }
   };
 
-  return (
-    <div className="fixed top-1/2 left-1/2 w-full grid grid-cols-2 -translate-x-1/2 -translate-y-1/2 px-4 gap-4 items-center justify-center max-w-[500px] max-sm:gap-1">
-      <div
-        className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
-          compareTime(data.data.times.tong_saharlik, data.data.times.quyosh)
-            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
-            : "bg-accent border border-primary"
-        }`}
-      >
-        <h1>Tong</h1> <p>{data.data.times.tong_saharlik}</p>
-      </div>
-      <div
-        className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
-          compareTime(data.data.times.quyosh, data.data.times.peshin)
-            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
-            : "bg-accent border border-primary"
-        }`}
-      >
-        <h1>Quyosh</h1> <p>{data.data.times.quyosh}</p>
-      </div>
-      <div
-        className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
-          compareTime(data.data.times.peshin, data.data.times.asr)
-            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
-            : "bg-accent border border-primary"
-        }`}
-      >
-        <h1>Peshin</h1> <p>{data.data.times.peshin}</p>
-      </div>
-      <div
-        className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
-          compareTime(data.data.times.asr, data.data.times.shom_iftor)
-            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
-            : "bg-accent border border-primary"
-        }`}
-      >
-        <h1>Asr</h1> <p>{data.data.times.asr}</p>
-      </div>
-      <div
-        className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
-          compareTime(data.data.times.shom_iftor, data.data.times.hufton)
-            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
-            : "bg-accent border border-primary"
-        }`}
-      >
-        <h1>Shom</h1> <p>{data.data.times.shom_iftor}</p>
-      </div>
-      <div
-        className={`flex flex-col items-center justify-center p-4 w-22 h-22 rounded-full ${
-          compareTime(data.data.times.hufton)
-            ? "bg-primary text-gray-900 shadow-lg shadow-primary"
-            : "bg-accent border border-primary"
-        }`}
-      >
-        <h1>Hufton</h1> <p>{data.data.times.hufton}</p>
-      </div>
+  const timeCom = (name, time1, time2) => {
+    return loc.pathname != "/vaqtlar" ? (
+      <>
+        <div
+          className={`flex ${
+            loc.pathname != "/vaqtlar" ? "sm:flex-col" : ""
+          } items-center justify-between p-4 w-full h-full border-b-2 border-primary ${
+            compareTime(time1, time2)
+              ? `bg-primary text-gray-900 font-bold`
+              : `bg-accent/0 backdrop-blur-sm max-sm:hidden text-primary`
+          }`}
+        >
+          <h1 className={`sm:hidden bg-accent text-primary px-2 rounded`}>
+            Namoz Vaqtlari
+          </h1>
+          <div
+            className={`flex items-center flex-col max-sm:bg-accent max-sm:text-primary max-sm:w-20 max-sm:h-20 justify-center rounded-full`}
+          >
+            <h1>{name}</h1> <p className="">{time1}</p>
+          </div>
+        </div>
+      </>
+    ) : (
+      <>
+        <div
+          className={`flex ${
+            loc.pathname != "/vaqtlar" ? "flex-col" : ""
+          } items-center justify-between p-4 w-full h-full border-b-2 border-primary ${
+            compareTime(time1, time2)
+              ? `bg-primary text-gray-900 font-bold`
+              : `bg-accent/0 backdrop-blur-sm ${
+                  loc.pathname != "/vaqtlar" ? "max-sm:hidden" : ""
+                }`
+          }`}
+        >
+          <h1>{name}</h1> <p>{time1}</p>
+        </div>
+      </>
+    );
+  };
+
+  return loc.pathname != "/vaqtlar" ? (
+    <Link
+      to={"/vaqtlar"}
+      className={`w-full ${loc.pathname != "/vaqtlar" ? "flex" : "grid"}`}
+    >
+      {timeCom("Бомдод", data.data.times.tong_saharlik, data.data.times.quyosh)}
+      {timeCom("Қуёш", data.data.times.quyosh, data.data.times.peshin)}
+      {timeCom("Пешин", data.data.times.peshin, data.data.times.asr)}
+      {timeCom("Аср", data.data.times.asr, data.data.times.shom_iftor)}
+      {timeCom("Шом", data.data.times.shom_iftor, data.data.times.hufton)}
+      {timeCom("Ҳуфтон", data.data.times.hufton)}
+    </Link>
+  ) : (
+    <div className={`w-full ${loc.pathname != "/vaqtlar" ? "flex" : "grid"}`}>
+      {timeCom("Бомдод", data.data.times.tong_saharlik, data.data.times.quyosh)}
+      {timeCom("Қуёш", data.data.times.quyosh, data.data.times.peshin)}
+      {timeCom("Пешин", data.data.times.peshin, data.data.times.asr)}
+      {timeCom("Аср", data.data.times.asr, data.data.times.shom_iftor)}
+      {timeCom("Шом", data.data.times.shom_iftor, data.data.times.hufton)}
+      {timeCom("Ҳуфтон", data.data.times.hufton)}
     </div>
   );
 };

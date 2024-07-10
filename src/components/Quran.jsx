@@ -20,20 +20,26 @@ const Quran = () => {
 
   return (
     <div>
-      <div className="p-4 grid grid-cols-10 gap-2 max-lg:grid-cols-6 max-md:grid-cols-3 max-md:p-2 max-[420px]:grid-cols-2">
+      <div className="p-2 grid grid-cols-8 md:gap-2 max-lg:grid-cols-5 max-md:grid-cols-1 max-md:p-0">
         {data.data.data.map((res, i) => {
           return (
             <Link
               to={`sura/${res.number}`}
               key={i}
-              className={`flex flex-col justify-center items-center gap-2 h-auto ${buttonVariants(
+              className={`flex md:flex-col justify-center max-md:justify-between items-center max-md:border-x-0 max-md:border-b max-md:rounded-none h-auto ${buttonVariants(
                 { variant: "" }
               )}`}
             >
-              <h1 className="text-2xl bg-black/30 h-12 w-12 rounded-full flex justify-center items-center">
+              <h1 className="text-2xl bg-black/30 h-12 w-12 rounded-full flex justify-center items-center max-md:-order-2">
                 {res.number}
-              </h1>{" "}
-              <h3>{res.englishName}</h3>
+              </h1>
+              <h2 className="text-xl">{res.name}</h2>
+              <div className="max-md:-order-1 flex flex-col items-center">
+                <h3 className="text-lg">{res.englishName}</h3>
+                <p className="text-xs mt-2">
+                  {res.numberOfAyahs} ayatdan iborat
+                </p>
+              </div>
             </Link>
           );
         })}

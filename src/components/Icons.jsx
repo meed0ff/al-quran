@@ -81,87 +81,6 @@ export function LineMdHomeTwotone(props) {
   );
 }
 
-export function LineMdHomeTwotone2(props) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1.5em"
-      height="1.5em"
-      viewBox="0 0 24 24"
-      {...props}
-    >
-      <path
-        fill="currentColor"
-        fillOpacity={0}
-        d="M5 8.5L12 3L19 8.5V21H15V13L14 12H10L9 13V21H5V8.5Z"
-      >
-        <animate
-          fill="freeze"
-          attributeName="fill-opacity"
-          begin="0.9s"
-          dur="0.15s"
-          values="0;0.3"
-        ></animate>
-      </path>
-      <g
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path strokeDasharray={15} strokeDashoffset={15} d="M4.5 21.5h15">
-          <animate
-            fill="freeze"
-            attributeName="stroke-dashoffset"
-            dur="0.2s"
-            values="15;0"
-          ></animate>
-        </path>
-        <path
-          strokeDasharray={15}
-          strokeDashoffset={15}
-          d="M4.5 21.5V8M19.5 21.5V8"
-        >
-          <animate
-            fill="freeze"
-            attributeName="stroke-dashoffset"
-            begin="0.2s"
-            dur="0.2s"
-            values="15;0"
-          ></animate>
-        </path>
-        <path
-          strokeDasharray={24}
-          strokeDashoffset={24}
-          d="M9.5 21.5V12.5H14.5V21.5"
-        >
-          <animate
-            fill="freeze"
-            attributeName="stroke-dashoffset"
-            begin="0.4s"
-            dur="0.4s"
-            values="24;0"
-          ></animate>
-        </path>
-        <path
-          strokeDasharray={30}
-          strokeDashoffset={30}
-          strokeWidth={2}
-          d="M2 10L12 2L22 10"
-        >
-          <animate
-            fill="freeze"
-            attributeName="stroke-dashoffset"
-            begin="0.5s"
-            dur="0.4s"
-            values="30;0"
-          ></animate>
-        </path>
-      </g>
-    </svg>
-  );
-}
-
 export function IonCaretBack(props) {
   return (
     <svg
@@ -280,6 +199,52 @@ export function LineMdCloseCircleTwotone(props) {
           ></animate>
         </path>
       </g>
+    </svg>
+  );
+}
+
+export function Loading(props) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="4em"
+      height="4em"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <circle cx={18} cy={12} r={0} fill="currentColor">
+        <animate
+          attributeName="r"
+          begin={0.67}
+          calcMode="spline"
+          dur="1.5s"
+          keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+          repeatCount="indefinite"
+          values="0;2;0;0"
+        ></animate>
+      </circle>
+      <circle cx={12} cy={12} r={0} fill="currentColor">
+        <animate
+          attributeName="r"
+          begin={0.33}
+          calcMode="spline"
+          dur="1.5s"
+          keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+          repeatCount="indefinite"
+          values="0;2;0;0"
+        ></animate>
+      </circle>
+      <circle cx={6} cy={12} r={0} fill="currentColor">
+        <animate
+          attributeName="r"
+          begin={0}
+          calcMode="spline"
+          dur="1.5s"
+          keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8"
+          repeatCount="indefinite"
+          values="0;2;0;0"
+        ></animate>
+      </circle>
     </svg>
   );
 }

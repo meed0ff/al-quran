@@ -8,12 +8,14 @@ import PageNotFound from "./components/PageNotFound";
 import Quran from "./components/Quran";
 import React, { useContext, useState } from "react";
 import NamazTime from "./components/NamazTime";
-// import Sura from "./components/Sura";
-const Sura = React.lazy(() => import("./components/Sura"));
+import Sura from "./components/Sura";
+// const Sura = React.lazy(() => import("./components/Sura"));
 
 import AudioPlayer from "react-h5-audio-player";
 import { SuraName, SuraContext, AyatContext } from "./components/Ayats";
 import { LineMdCloseCircleTwotone } from "./components/Icons";
+import AllohNames from "./components/AllohNames";
+import AllohName from "./components/AllohName";
 // import "react-h5-audio-player/lib/styles.less";
 
 function App() {
@@ -28,15 +30,10 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/quran" element={<Quran />} />
-        <Route
-          path="/quran/sura/:number"
-          element={
-            <React.Suspense fallback={"Loading..."}>
-              <Sura />
-            </React.Suspense>
-          }
-        />
-        <Route path="/namaz-times" element={<NamazTime />} />
+        <Route path="/quran/sura/:number" element={<Sura />} />
+        <Route path="/vaqtlar" element={<NamazTime />} />
+        <Route path="/alloh-ismlari" element={<AllohNames />} />
+        <Route path="/alloh-ismlari/:number" element={<AllohName />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <div
@@ -44,10 +41,10 @@ function App() {
           sura.length == 0 ||
           ayat == sura.length ||
           loc.pathname == "/" ||
-          loc.pathname == "/namaz-times"
+          loc.pathname == "/vaqtlar"
             ? "hidden"
             : ""
-        } mt-12 max-lg:mt-[150px]`}
+        } mt-40`}
       ></div>
       <Footer />
       <div
