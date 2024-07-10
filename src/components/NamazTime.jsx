@@ -22,26 +22,32 @@ const NamazTime = () => {
       </div>
     );
 
-  const compareTime = function (tempTime, tempTime2) {
+  const compareTime = function (tempTime, tempTime2, isHufton) {
     const date = new Date();
     const curTime = date.getHours() * 60 + date.getMinutes();
     const time = +(tempTime.split(":")[0] * 60) + +tempTime.split(":")[1];
-    if (tempTime2) {
+    if (isHufton) {
       const time2 = +(tempTime2.split(":")[0] * 60) + +tempTime2.split(":")[1];
-      return time < curTime && curTime < time2;
+      return time < curTime || curTime < time2;
     } else {
-      return time < curTime;
+      if (tempTime2) {
+        const time2 =
+          +(tempTime2.split(":")[0] * 60) + +tempTime2.split(":")[1];
+        return time < curTime && curTime < time2;
+      } else {
+        return time < curTime;
+      }
     }
   };
 
-  const timeCom = (name, time1, time2) => {
+  const timeCom = (name, time1, time2, isHufton = false) => {
     return loc.pathname != "/vaqtlar" ? (
       <>
         <div
           className={`flex ${
             loc.pathname != "/vaqtlar" ? "sm:flex-col" : ""
           } items-center justify-between p-4 w-full h-full border-b-2 border-primary ${
-            compareTime(time1, time2)
+            compareTime(time1, time2, isHufton)
               ? `bg-primary text-gray-900 font-bold`
               : `bg-accent/0 backdrop-blur-sm max-sm:hidden text-primary`
           }`}
@@ -62,7 +68,7 @@ const NamazTime = () => {
           className={`flex ${
             loc.pathname != "/vaqtlar" ? "flex-col" : ""
           } items-center justify-between p-4 w-full h-full border-b-2 border-primary ${
-            compareTime(time1, time2)
+            compareTime(time1, time2, isHufton)
               ? `bg-primary text-gray-900 font-bold`
               : `bg-accent/0 backdrop-blur-sm ${
                   loc.pathname != "/vaqtlar" ? "max-sm:hidden" : ""
@@ -85,7 +91,7 @@ const NamazTime = () => {
       {timeCom("Пешин", data.data.times.peshin, data.data.times.asr)}
       {timeCom("Аср", data.data.times.asr, data.data.times.shom_iftor)}
       {timeCom("Шом", data.data.times.shom_iftor, data.data.times.hufton)}
-      {timeCom("Ҳуфтон", data.data.times.hufton)}
+      {timeCom("Ҳуфтон", data.data.times.hufton, data.data.times.quyosh, true)}
     </Link>
   ) : (
     <div className={`w-full ${loc.pathname != "/vaqtlar" ? "flex" : "grid"}`}>
@@ -94,7 +100,7 @@ const NamazTime = () => {
       {timeCom("Пешин", data.data.times.peshin, data.data.times.asr)}
       {timeCom("Аср", data.data.times.asr, data.data.times.shom_iftor)}
       {timeCom("Шом", data.data.times.shom_iftor, data.data.times.hufton)}
-      {timeCom("Ҳуфтон", data.data.times.hufton)}
+      {timeCom("Ҳуфтон", data.data.times.hufton, data.data.times.quyosh, true)}
     </div>
   );
 };

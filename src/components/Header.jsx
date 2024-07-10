@@ -10,9 +10,13 @@ const Header = () => {
         loc.pathname == "/" ? "" : "flex justify-between items-center"
       } bg-green-700 text-gray-900 font-bold w-full p-2 flex items-center justify-center fixed z-[999] top-0`}
     >
-      <Link to={-1} className={`${loc.pathname == "/" ? "hidden" : ""}`}>
-        <IonCaretBack />
-      </Link>
+      {loc.pathname == "/" ? (
+        <></>
+      ) : (
+        <Link to={-1}>
+          <IonCaretBack />
+        </Link>
+      )}
       <Link to={"/"}>
         <LineMdHomeTwotone />
       </Link>
